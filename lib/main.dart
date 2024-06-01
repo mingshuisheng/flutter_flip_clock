@@ -1,10 +1,15 @@
 import 'package:flipclock/app.dart';
 import 'package:flipclock/constants.dart';
+import 'package:flipclock/app_state.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:window_manager/window_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // init global app state
+  var appStateController = Get.put(AppStateController());
+
   await windowManager.ensureInitialized();
   const width = 710.0;
   const minWidth = 200.0;
@@ -14,7 +19,6 @@ void main() async {
     // center: true,
     titleBarStyle: TitleBarStyle.hidden,
     windowButtonVisibility: false,
-    alwaysOnTop: true,
     fullScreen: false,
     minimumSize: Size(minWidth, minWidth / aspectRatio),
   );
@@ -23,6 +27,12 @@ void main() async {
     await windowManager.setAsFrameless();
     await windowManager.setResizable(false);
     await windowManager.setAspectRatio(aspectRatio);
+    if (appStateController.windowLevel.value == WindowLevel.top) {
+      await windowManager.setAlwaysOnTop(true);
+    } else if (appStateController.windowLevel.value == WindowLevel.bottom) {
+      await windowManager.setAlwaysOnBottom(true);
+    }
   });
+
   runApp(const App());
 }

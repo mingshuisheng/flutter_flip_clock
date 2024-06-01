@@ -1,4 +1,3 @@
-import 'package:flipclock/widgets/app_state.dart';
 import 'package:flipclock/types.dart';
 import 'package:flipclock/widgets/single_child_utils.dart';
 import 'package:flipclock/widgets/window_frame.dart';
@@ -7,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'my_default_widget.dart';
 
 final List<SingleChildBuilder> widgets = [
-  (w) => AppState(child: w),
   (w) => WindowFrame(child: w),
   (w) => MyDefaultWidget(child: w),
   (w) => Directionality(textDirection: TextDirection.ltr, child: w)

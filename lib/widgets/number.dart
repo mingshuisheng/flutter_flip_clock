@@ -8,6 +8,7 @@ const cardColor = Colors.black;
 
 const space = 1.0;
 const radiusRatio = 0.12;
+const perspective = 0.001;
 
 class Number extends BaseStatelessWidget {
   const Number({super.key, this.num = 0, this.max = 9});
@@ -49,9 +50,9 @@ class Number extends BaseStatelessWidget {
           ),
           TweenAnimationBuilder(
               key: ValueKey(next),
-              tween: Tween<double>(begin: 0.0, end: 180.0),
-              curve: Curves.easeOutBack,
-              duration: const Duration(milliseconds: 500),
+              tween: Tween<double>(begin: 10.0, end: 180.0),
+              curve: Curves.fastOutSlowIn,
+              duration: const Duration(milliseconds: 600),
               builder: (_, angle, __) {
                 return angle <= 90
                     ? UpRotateCard(
@@ -174,7 +175,7 @@ class UpRotateCard extends BaseRotateCard {
   Widget build(BuildContext context) {
     return Transform(
       transform: Matrix4.identity()
-        ..setEntry(3, 2, 0.002)
+        ..setEntry(3, 2, perspective)
         ..rotateX(angle * pi / 180),
       origin: Offset(size / 2, size),
       child: ClipRRect(
@@ -207,7 +208,7 @@ class DownRotateCard extends BaseRotateCard {
   Widget build(BuildContext context) {
     return Transform(
       transform: Matrix4.identity()
-        ..setEntry(3, 2, 0.002)
+        ..setEntry(3, 2, perspective)
         ..rotateX(angle * pi / 180),
       origin: Offset(size / 2, -space),
       child: ClipRRect(

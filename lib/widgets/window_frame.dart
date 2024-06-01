@@ -1,3 +1,4 @@
+import 'package:flipclock/app_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:window_manager/window_manager.dart';
@@ -12,8 +13,13 @@ class WindowFrame extends BaseStatelessWidget {
   @override
   Widget build(BuildContext context) {
     final windowFrameController = Get.put(WindowFrameController());
+    var appStateController = getAppStateController();
     return Listener(
       onPointerDown: (e) async {
+        if (appStateController.disableWindowFrame.value ||
+            appStateController.locked.value) {
+          return;
+        }
         if (windowFrameController.resizeDirection.value ==
             ResizeDirection.none) {
           await windowManager.startDragging();
@@ -26,6 +32,10 @@ class WindowFrame extends BaseStatelessWidget {
         }
       },
       onPointerHover: (e) async {
+        if (appStateController.disableWindowFrame.value ||
+            appStateController.locked.value) {
+          return;
+        }
         final localPosition = e.localPosition;
         final windowSize = MediaQuery.of(context).size;
         windowFrameController.resizeDirection.value =
