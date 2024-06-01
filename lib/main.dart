@@ -1,12 +1,24 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flipclock/app.dart';
 import 'package:flipclock/constants.dart';
 import 'package:flipclock/app_state.dart';
+import 'package:flipclock/window_listener.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:window_manager/window_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  const path = "./conf.json";
+  final file = File(path);
+  var s = await file.readAsString();
+  var json = jsonDecode(s);
+  print("a: ${json["a"]}");
+
+
   // init global app state
   var appStateController = Get.put(AppStateController());
 
@@ -32,6 +44,7 @@ void main() async {
     } else if (appStateController.windowLevel.value == WindowLevel.bottom) {
       await windowManager.setAlwaysOnBottom(true);
     }
+    windowManager.addListener(MyWindowListener());
   });
 
   runApp(const App());

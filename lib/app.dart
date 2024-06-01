@@ -37,10 +37,17 @@ class App extends StatelessWidget {
               ),
             ),
       ],
-      child: Stack(
+      child:  Stack(
         children: [
           const TimeArea(),
-          Obx(() => showTools.value ? const ToolsCover() : Container()),
+          Obx(
+            () => AnimatedOpacity(
+              opacity: showTools.value ? 1 : 0,
+              curve: Curves.fastEaseInToSlowEaseOut,
+              duration: const Duration(milliseconds: 500),
+              child: const ToolsCover(),
+            ),
+          ),
         ],
       ),
     );

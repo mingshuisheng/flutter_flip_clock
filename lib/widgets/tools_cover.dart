@@ -56,6 +56,9 @@ class ToolsCover extends BaseStatelessWidget {
                     onClick: handleLockClick,
                   );
                 }),
+                SizedBox(
+                  width: buttonSize * 0.2,
+                ),
                 Obx(() {
                   var assetName =
                       positionSvgMap[appStateController.windowLevel.value]!;
