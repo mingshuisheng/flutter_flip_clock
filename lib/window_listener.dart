@@ -1,4 +1,5 @@
 import 'package:flipclock/app_state.dart';
+import 'package:flipclock/types.dart';
 import 'package:window_manager/window_manager.dart';
 
 class MyWindowListener with WindowListener {
@@ -9,8 +10,9 @@ class MyWindowListener with WindowListener {
   @override
   void onWindowMoved() async {
     var position = await windowManager.getPosition();
-    print("position: $position");
-
+    appStateController.appConfig.x = position.dx;
+    appStateController.appConfig.y = position.dy;
+    appStateController.saveConfig();
   }
 
   @override
@@ -26,7 +28,9 @@ class MyWindowListener with WindowListener {
   @override
   void onWindowResized() async {
     var size = await windowManager.getSize();
-    print("size: $size");
+    appStateController.appConfig.width = size.width;
+    appStateController.appConfig.height = size.height;
+    appStateController.saveConfig();
     // 为什么在resize过程中取消AlwaysOnBottom？
     // 因为resize过程中会不断的闪烁
     // 未来如果windowManager解决了这个问题，那请帮忙移除它

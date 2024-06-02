@@ -8,7 +8,8 @@ import 'my_default_widget.dart';
 final List<SingleChildBuilder> widgets = [
   (w) => WindowFrame(child: w),
   (w) => MyDefaultWidget(child: w),
-  (w) => Directionality(textDirection: TextDirection.ltr, child: w)
+  (w) => Directionality(textDirection: TextDirection.ltr, child: w),
+  (w) => Overlay(initialEntries: [OverlayEntry(builder: (c) => w)]),
 ];
 
 class BaseWidget extends BaseSingleChildCompose {

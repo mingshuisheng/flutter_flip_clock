@@ -1,10 +1,12 @@
 import 'package:flipclock/widgets/base_stateless_widget.dart';
 import 'package:flipclock/widgets/svg_button.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:window_manager/window_manager.dart';
 import '../app_state.dart';
-import '../colors.dart';
+import '../sizes.dart';
+import '../types.dart';
 
 class ToolsCover extends BaseStatelessWidget {
   const ToolsCover({super.key});
@@ -32,14 +34,14 @@ class ToolsCover extends BaseStatelessWidget {
       width: size.width,
       height: size.height,
       decoration: BoxDecoration(
-        color: const Color(0xccaaaaaa),
-        border: Border.all(color: Colors.white, width: 1),
+        color: const Color(0x66aaaaaa),
+        border: Border.all(color: const Color(0xffcccccc), width: 1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: calcToolPadding(size),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
@@ -49,16 +51,16 @@ class ToolsCover extends BaseStatelessWidget {
                       ? "assets/lock.svg"
                       : "assets/unlock.svg";
                   return SvgButton(
+                    hoverMessage: appStateController.locked ? "点击解锁" : "点击锁定",
                     assetName: assetName,
                     onClick: handleLockClick,
                   );
                 }),
                 const Gap(),
                 Obx(() {
-                  var assetName =
-                      positionSvgMap[appStateController.windowLevel]!;
                   return SvgButton(
-                    assetName: assetName,
+                    assetName: positionSvgMap[appStateController.windowLevel]!,
+                    hoverMessage: "窗口置顶或置底",
                     onClick: handleWindowLevelClick,
                   );
                 }),
@@ -66,6 +68,7 @@ class ToolsCover extends BaseStatelessWidget {
             ),
             SvgButton(
               assetName: "assets/close.svg",
+              hoverMessage: "关闭窗口",
               onClick: () async => await windowManager.close(),
             )
           ],

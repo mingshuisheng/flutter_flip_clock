@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 
 const defaultWindowSize = Size(710, 200);
 const defaultNumberSize = Size(100, 200);
@@ -41,4 +41,10 @@ Size calcAvailableSize(Size windowSize) {
     return Size(
         windowSize.height * defaultWindowSize.aspectRatio, windowSize.height);
   }
+}
+
+EdgeInsetsGeometry calcToolPadding(Size windowSize) {
+  final realSize = calcAvailableSize(windowSize);
+  final padding = 20 / defaultWindowSize.height * realSize.height;
+  return EdgeInsets.fromLTRB(padding, 0, padding, 0);
 }

@@ -1,11 +1,9 @@
 import 'dart:math';
 
+import 'package:flipclock/app_state.dart';
 import 'package:flipclock/sizes.dart';
 import 'package:flipclock/widgets/base_stateless_widget.dart';
 import 'package:flutter/cupertino.dart';
-import '../colors.dart';
-
-const cardColor = Colors.black;
 
 const space = 1.0;
 const radiusRatio = 0.12;
@@ -26,8 +24,18 @@ class Number extends BaseStatelessWidget {
     final numberSize = realNumberSize(size);
     final cardSize = numberSize.height / 2;
     final textStructStyle = StrutStyle(
-        fontSize: numberSize.height, leading: 0, height: 1.035, forceStrutHeight: true);
-    final textStyle = TextStyle(fontSize: numberSize.height, color: Colors.white);
+        fontSize: numberSize.height,
+        leading: 0,
+        height: 1.035,
+        forceStrutHeight: true);
+
+    final appStateController = getAppStateController();
+
+    final textStyle = TextStyle(
+        fontSize: numberSize.height,
+        color: appStateController.appConfig.fontColor);
+
+    final cardColor = appStateController.appConfig.cardColor;
 
     return SizedBox(
       width: numberSize.width,
@@ -35,10 +43,12 @@ class Number extends BaseStatelessWidget {
       child: Stack(
         children: [
           UpFixedCard(
-              number: next,
-              size: cardSize ,
-              textStructStyle: textStructStyle,
-              style: textStyle),
+            number: next,
+            size: cardSize,
+            textStructStyle: textStructStyle,
+            style: textStyle,
+            color: cardColor,
+          ),
           Positioned(
             top: cardSize + space,
             child: DownFixedCard(
@@ -46,6 +56,7 @@ class Number extends BaseStatelessWidget {
               size: cardSize,
               textStructStyle: textStructStyle,
               style: textStyle,
+              color: cardColor,
             ),
           ),
           TweenAnimationBuilder(
@@ -61,6 +72,7 @@ class Number extends BaseStatelessWidget {
                         size: cardSize,
                         textStructStyle: textStructStyle,
                         style: textStyle,
+                        color: cardColor,
                       )
                     : Positioned(
                         top: cardSize + space,
@@ -70,6 +82,7 @@ class Number extends BaseStatelessWidget {
                           size: cardSize,
                           textStructStyle: textStructStyle,
                           style: textStyle,
+                          color: cardColor,
                         ),
                       );
               }),
@@ -85,12 +98,14 @@ abstract class BaseCard extends BaseStatelessWidget {
       required this.number,
       required this.size,
       required this.textStructStyle,
-      required this.style});
+      required this.style,
+      required this.color});
 
   final int number;
   final double size;
   final StrutStyle textStructStyle;
   final TextStyle style;
+  final Color color;
 }
 
 class UpFixedCard extends BaseCard {
@@ -99,14 +114,15 @@ class UpFixedCard extends BaseCard {
       required super.number,
       required super.size,
       required super.textStructStyle,
-      required super.style});
+      required super.style,
+      required super.color});
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(size * radiusRatio),
       child: Container(
-        color: cardColor,
+        color: color,
         width: size,
         height: size - space,
         child: Text(
@@ -126,14 +142,15 @@ class DownFixedCard extends BaseCard {
       required super.number,
       required super.size,
       required super.textStructStyle,
-      required super.style});
+      required super.style,
+      required super.color});
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(size * radiusRatio),
       child: Container(
-        color: cardColor,
+        color: color,
         width: size,
         height: size - space,
         child: Transform(
@@ -157,7 +174,8 @@ abstract class BaseRotateCard extends BaseCard {
       required super.size,
       required super.textStructStyle,
       required this.angle,
-      required super.style});
+      required super.style,
+      required super.color});
 
   final double angle;
 }
@@ -169,7 +187,8 @@ class UpRotateCard extends BaseRotateCard {
       required super.size,
       required super.textStructStyle,
       required super.style,
-      required super.angle});
+      required super.angle,
+      required super.color});
 
   @override
   Widget build(BuildContext context) {
@@ -181,7 +200,7 @@ class UpRotateCard extends BaseRotateCard {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(size * radiusRatio),
         child: Container(
-          color: cardColor,
+          color: color,
           width: size,
           height: size - space,
           child: Text(
@@ -202,7 +221,8 @@ class DownRotateCard extends BaseRotateCard {
       required super.size,
       required super.textStructStyle,
       required super.style,
-      required super.angle});
+      required super.angle,
+      required super.color});
 
   @override
   Widget build(BuildContext context) {
@@ -214,7 +234,7 @@ class DownRotateCard extends BaseRotateCard {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(size * radiusRatio),
         child: Container(
-          color: cardColor,
+          color: color,
           width: size,
           height: size - space,
           child: Transform(

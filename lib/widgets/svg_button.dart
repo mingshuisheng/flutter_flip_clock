@@ -1,6 +1,6 @@
 import 'package:flipclock/widgets/button.dart';
 import 'package:flipclock/widgets/single_child_utils.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SvgButton extends Button {
@@ -8,11 +8,13 @@ class SvgButton extends Button {
     super.key,
     required this.assetName,
     required super.onClick,
+    required this.hoverMessage,
     this.color = const Color(0xff000000),
   });
 
   final String assetName;
   final Color color;
+  final String hoverMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,14 @@ class SvgButton extends Button {
     return SingleChildComposeBuilder(
       composeWidget: super.getComposeWidget()
         ..addAll([
+          (child) => buttonSize >= 20
+              ? Tooltip(
+                  message: hoverMessage,
+                  child: child,
+                )
+              : Container(
+                  child: child
+                ),
           (child) => SizedBox(
                 width: buttonSize,
                 height: buttonSize,
