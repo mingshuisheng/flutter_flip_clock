@@ -21,10 +21,10 @@ class Button extends BaseSingleChildCompose {
           MouseRegion(
             cursor: SystemMouseCursors.click,
             onEnter: (e) {
-              appStateController.disableWindowFrame.value = true;
+              appStateController.disableWindowFrame = true;
             },
             onExit: (e) {
-              appStateController.disableWindowFrame.value = false;
+              appStateController.disableWindowFrame = false;
             },
             child: child,
           ),

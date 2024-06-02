@@ -46,7 +46,7 @@ class ToolsCover extends BaseStatelessWidget {
             Row(
               children: [
                 Obx(() {
-                  final assetName = appStateController.locked.value
+                  final assetName = appStateController.locked
                       ? "assets/lock.svg"
                       : "assets/unlock.svg";
                   return SvgButton(
@@ -61,7 +61,7 @@ class ToolsCover extends BaseStatelessWidget {
                 ),
                 Obx(() {
                   var assetName =
-                      positionSvgMap[appStateController.windowLevel.value]!;
+                      positionSvgMap[appStateController.windowLevel]!;
                   return SvgButton(
                     assetName: assetName,
                     width: buttonSize,

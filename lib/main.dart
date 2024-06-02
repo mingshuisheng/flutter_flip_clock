@@ -39,9 +39,9 @@ void main() async {
     await windowManager.setAsFrameless();
     await windowManager.setResizable(false);
     await windowManager.setAspectRatio(aspectRatio);
-    if (appStateController.windowLevel.value == WindowLevel.top) {
+    if (appStateController.windowLevel == WindowLevel.top) {
       await windowManager.setAlwaysOnTop(true);
-    } else if (appStateController.windowLevel.value == WindowLevel.bottom) {
+    } else if (appStateController.windowLevel == WindowLevel.bottom) {
       await windowManager.setAlwaysOnBottom(true);
     }
     windowManager.addListener(MyWindowListener());

@@ -16,8 +16,8 @@ class WindowFrame extends BaseStatelessWidget {
     var appStateController = getAppStateController();
     return Listener(
       onPointerDown: (e) async {
-        if (appStateController.disableWindowFrame.value ||
-            appStateController.locked.value) {
+        if (appStateController.disableWindowFrame ||
+            appStateController.locked) {
           return;
         }
         if (windowFrameController.resizeDirection.value ==
@@ -32,8 +32,8 @@ class WindowFrame extends BaseStatelessWidget {
         }
       },
       onPointerHover: (e) async {
-        if (appStateController.disableWindowFrame.value ||
-            appStateController.locked.value) {
+        if (appStateController.disableWindowFrame ||
+            appStateController.locked) {
           return;
         }
         final localPosition = e.localPosition;

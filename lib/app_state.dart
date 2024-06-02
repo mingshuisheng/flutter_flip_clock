@@ -1,20 +1,22 @@
 import 'package:get/get.dart';
 
 class AppStateController extends GetxController {
-  var disableWindowFrame = false.obs;
-  var locked = false.obs;
-  var windowLevel = WindowLevel.top.obs;
+  final _disableWindowFrame = false.obs;
+  get disableWindowFrame => _disableWindowFrame.value;
+  set disableWindowFrame(value) => _disableWindowFrame.value = value;
 
-  void lock() => locked.value = true;
+  final _locked = false.obs;
+  get locked => _locked.value;
+  void lock() => _locked.value = true;
+  void unlock() => _locked.value = false;
+  void toggleLock() => _locked.value = !locked;
 
-  void unlock() => locked.value = false;
-
-  void toggleLock() => locked.value = !locked.value;
-
+  final _windowLevel = WindowLevel.top.obs;
+  get windowLevel => _windowLevel.value;
   WindowLevel toggleWindowLevel() {
-    windowLevel.value =
-        WindowLevel.values[(windowLevel.value.index + 1) % WindowLevel.values.length];
-    return windowLevel.value;
+    _windowLevel.value = WindowLevel
+        .values[(_windowLevel.value.index + 1) % WindowLevel.values.length];
+    return _windowLevel.value;
   }
 }
 
