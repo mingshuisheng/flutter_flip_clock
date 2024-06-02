@@ -94,7 +94,7 @@ const Map<ResizeDirection, ResizeEdge> directionToEdge = {
   ResizeDirection.topLeft: ResizeEdge.topLeft,
   ResizeDirection.bottomLeft: ResizeEdge.bottomLeft,
   ResizeDirection.topRight: ResizeEdge.topRight,
-  ResizeDirection.bottomRight: ResizeEdge.bottomRight
+  ResizeDirection.bottomRight: ResizeEdge.bottomRight,
 };
 
 const Map<int, ResizeDirection> resizeDirectionMap = {
@@ -103,10 +103,15 @@ const Map<int, ResizeDirection> resizeDirectionMap = {
   02: ResizeDirection.bottom,
   10: ResizeDirection.left,
   20: ResizeDirection.right,
-  11: ResizeDirection.topLeft,
-  12: ResizeDirection.bottomLeft,
-  21: ResizeDirection.topRight,
-  22: ResizeDirection.bottomRight
+  // 从结果来看，完全不能斜角，因为设置了aspectRatio之后，只有垂直方向有效
+  // 11: ResizeDirection.topLeft,
+  // 12: ResizeDirection.bottomLeft,
+  // 21: ResizeDirection.topRight,
+  // 22: ResizeDirection.bottomRight,
+  11: ResizeDirection.top,
+  12: ResizeDirection.bottom,
+  21: ResizeDirection.top,
+  22: ResizeDirection.bottom,
 };
 
 ResizeDirection cursorResizeDirection(
