@@ -8,24 +8,22 @@ class SvgButton extends Button {
     super.key,
     required this.assetName,
     required super.onClick,
-    this.width = 50,
-    this.height = 50,
     this.color = const Color(0xff000000),
   });
 
   final String assetName;
-  final double width;
-  final double height;
   final Color color;
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final buttonSize = size.height * 0.2;
     return SingleChildComposeBuilder(
       composeWidget: super.getComposeWidget()
         ..addAll([
           (child) => SizedBox(
-                width: height,
-                height: height,
+                width: buttonSize,
+                height: buttonSize,
                 child: child,
               ),
         ]),

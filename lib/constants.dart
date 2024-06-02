@@ -1,1 +1,0 @@
-const aspectRatio = 710.0 / 200.0;

@@ -12,7 +12,6 @@ class ToolsCover extends BaseStatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final buttonSize = size.height * 0.2;
     final appStateController = getAppStateController();
     final handleLockClick = appStateController.toggleLock;
     handleWindowLevelClick() async {
@@ -51,21 +50,15 @@ class ToolsCover extends BaseStatelessWidget {
                       : "assets/unlock.svg";
                   return SvgButton(
                     assetName: assetName,
-                    width: buttonSize,
-                    height: buttonSize,
                     onClick: handleLockClick,
                   );
                 }),
-                SizedBox(
-                  width: buttonSize * 0.2,
-                ),
+                const Gap(),
                 Obx(() {
                   var assetName =
                       positionSvgMap[appStateController.windowLevel]!;
                   return SvgButton(
                     assetName: assetName,
-                    width: buttonSize,
-                    height: buttonSize,
                     onClick: handleWindowLevelClick,
                   );
                 }),
@@ -73,13 +66,24 @@ class ToolsCover extends BaseStatelessWidget {
             ),
             SvgButton(
               assetName: "assets/close.svg",
-              width: buttonSize,
-              height: buttonSize,
               onClick: () async => await windowManager.close(),
             )
           ],
         ),
       ),
+    );
+  }
+}
+
+class Gap extends StatelessWidget {
+  const Gap({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final gapSize = size.height * 0.04;
+    return SizedBox(
+      width: gapSize,
     );
   }
 }

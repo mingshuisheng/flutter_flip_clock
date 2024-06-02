@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flipclock/sizes.dart';
 import 'package:flipclock/widgets/base_stateless_widget.dart';
 import 'package:flutter/cupertino.dart';
 import '../colors.dart';
@@ -22,25 +23,24 @@ class Number extends BaseStatelessWidget {
     final current = num - 1 < 0 ? max : num - 1;
 
     final size = MediaQuery.of(context).size;
-    final width = size.width * 100 / 710;
-    final height = size.height;
-    final cardSize = height / 2;
+    final numberSize = realNumberSize(size);
+    final cardSize = numberSize.height / 2;
     final textStructStyle = StrutStyle(
-        fontSize: height, leading: 0, height: 1.035, forceStrutHeight: true);
-    final textStyle = TextStyle(fontSize: height, color: Colors.white);
+        fontSize: numberSize.height, leading: 0, height: 1.035, forceStrutHeight: true);
+    final textStyle = TextStyle(fontSize: numberSize.height, color: Colors.white);
 
     return SizedBox(
-      width: width,
-      height: height,
+      width: numberSize.width,
+      height: numberSize.height,
       child: Stack(
         children: [
           UpFixedCard(
               number: next,
-              size: cardSize,
+              size: cardSize ,
               textStructStyle: textStructStyle,
               style: textStyle),
           Positioned(
-            top: height / 2 + space,
+            top: cardSize + space,
             child: DownFixedCard(
               number: current,
               size: cardSize,
@@ -63,7 +63,7 @@ class Number extends BaseStatelessWidget {
                         style: textStyle,
                       )
                     : Positioned(
-                        top: height / 2 + space,
+                        top: cardSize + space,
                         child: DownRotateCard(
                           number: next,
                           angle: angle - 180,
