@@ -26,6 +26,7 @@ void main() async {
     windowButtonVisibility: false,
     fullScreen: false,
     minimumSize: minWindowSize,
+    skipTaskbar: true
   );
 
   // position比较特殊，如果在waitUntilReadyToShow的回到函数里面，那么窗口的位置会出现跳变
