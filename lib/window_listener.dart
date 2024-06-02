@@ -1,87 +1,37 @@
+import 'package:flipclock/app_state.dart';
 import 'package:window_manager/window_manager.dart';
 
-class MyWindowListener implements WindowListener {
-  @override
-  void onWindowBlur() {
-    // TODO: implement onWindowBlur
-  }
+class MyWindowListener with WindowListener {
+  MyWindowListener({required this.appStateController});
 
-  @override
-  void onWindowClose() {
-    // TODO: implement onWindowClose
-  }
-
-  @override
-  void onWindowDocked() {
-    // TODO: implement onWindowDocked
-  }
-
-  @override
-  void onWindowEnterFullScreen() {
-    // TODO: implement onWindowEnterFullScreen
-  }
-
-  @override
-  void onWindowEvent(String eventName) {
-    // TODO: implement onWindowEvent
-  }
-
-  @override
-  void onWindowFocus() {
-    // TODO: implement onWindowFocus
-  }
-
-  @override
-  void onWindowLeaveFullScreen() {
-    // TODO: implement onWindowLeaveFullScreen
-  }
-
-  @override
-  void onWindowMaximize() {
-    // TODO: implement onWindowMaximize
-  }
-
-  @override
-  void onWindowMinimize() {
-    // TODO: implement onWindowMinimize
-  }
-
-  @override
-  void onWindowMove() {
-    // TODO: implement onWindowMove
-  }
+  final AppStateController appStateController;
 
   @override
   void onWindowMoved() async {
-    // TODO: implement onWindowMoved
     var position = await windowManager.getPosition();
     print("position: $position");
+
   }
 
   @override
-  void onWindowResize() {
-    // TODO: implement onWindowResize
+  void onWindowResize() async {
+    // 为什么在resize过程中取消AlwaysOnBottom？
+    // 因为resize过程中会不断的闪烁
+    // 未来如果windowManager解决了这个问题，那请帮忙移除它
+    if (await windowManager.isAlwaysOnBottom()) {
+      windowManager.setAlwaysOnBottom(false);
+    }
   }
 
   @override
   void onWindowResized() async {
-    // TODO: implement onWindowResized
     var size = await windowManager.getSize();
     print("size: $size");
-  }
-
-  @override
-  void onWindowRestore() {
-    // TODO: implement onWindowRestore
-  }
-
-  @override
-  void onWindowUndocked() {
-    // TODO: implement onWindowUndocked
-  }
-
-  @override
-  void onWindowUnmaximize() {
-    // TODO: implement onWindowUnmaximize
+    // 为什么在resize过程中取消AlwaysOnBottom？
+    // 因为resize过程中会不断的闪烁
+    // 未来如果windowManager解决了这个问题，那请帮忙移除它
+    if (appStateController.windowLevel == WindowLevel.bottom) {
+      await windowManager.setAlwaysOnBottom(true);
+    }
   }
 }

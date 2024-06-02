@@ -22,13 +22,21 @@ class WindowFrame extends BaseStatelessWidget {
         }
         if (windowFrameController.resizeDirection.value ==
             ResizeDirection.none) {
+          // 为什么要取消AlwaysOnBottom？
+          // 因为现在windowManager的AlwaysOnBottom在移动过程中会出现不断的闪烁
+          // 如果未来这个问题解决了，那就请去掉它
+          final alwaysOnBottom = await windowManager.isAlwaysOnBottom();
+          if (alwaysOnBottom) {
+            await windowManager.setAlwaysOnBottom(false);
+          }
           await windowManager.startDragging();
+          await windowManager.setAlwaysOnBottom(alwaysOnBottom);
         } else {
           final resizable = await windowManager.isResizable();
-          windowManager.setResizable(true);
+          await windowManager.setResizable(true);
           await windowManager.startResizing(
               directionToEdge[windowFrameController.resizeDirection.value]!);
-          windowManager.setResizable(resizable);
+          await windowManager.setResizable(resizable);
         }
       },
       onPointerHover: (e) async {
