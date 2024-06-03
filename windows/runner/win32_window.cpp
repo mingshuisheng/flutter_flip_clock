@@ -2,6 +2,7 @@
 
 #include <dwmapi.h>
 #include <flutter_windows.h>
+#pragma comment(lib, "imm32.lib")
 
 #include "resource.h"
 
