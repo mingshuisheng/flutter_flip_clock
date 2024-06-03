@@ -30,7 +30,9 @@ class WindowFrame extends BaseStatelessWidget {
             await windowManager.setAlwaysOnBottom(false);
           }
           await windowManager.startDragging();
-          await windowManager.setAlwaysOnBottom(alwaysOnBottom);
+          if (alwaysOnBottom) {
+            await windowManager.setAlwaysOnBottom(alwaysOnBottom);
+          }
         } else {
           final resizable = await windowManager.isResizable();
           await windowManager.setResizable(true);
